@@ -3,6 +3,11 @@ name = "rs-ltsv-filter"
 version = "0.1.0"
 edition = "2021"
 
+description = "stdin(LTSV) -> stdout(filtered)"
+license = "Apache-2.0"
+documentation = "https://docs.rs/crate/rs-ltsv-filter/latest"
+repository = "https://github.com/takanoriyanagitani/rs-ltsv-filter"
+
 [lints.rust]
 unsafe_code = "forbid"
 
