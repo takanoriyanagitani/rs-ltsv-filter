@@ -4,3 +4,5 @@ pub const LINE_SEPARATOR_DEFAULT: u8 = b'\n';
 
 pub const FIELD_SEPARATOR_DEFAULT: u8 = b'\t';
 pub const VALUE_SEPARATOR_DEFAULT: u8 = b':';
+
+pub const OUTPUT_EMPTY_DEFAULT: bool = false;

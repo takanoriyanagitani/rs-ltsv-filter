@@ -11,6 +11,7 @@ pub fn line2single2value2output<O>(
     value_separator: u8,
     single_label: &[u8],
     output: &mut O,
+    output_empty: bool,
 ) -> Result<(), io::Error>
 where
     O: FnMut(&[u8]) -> Result<(), io::Error>,
@@ -25,6 +26,10 @@ where
 
         let value: &[u8] = splited.next().unwrap_or_default();
         output(value)?;
+        return Ok(());
+    }
+    if output_empty {
+        output(b"")?;
     }
     Ok(())
 }
@@ -36,6 +41,7 @@ pub fn reader2single2value2output<R, O>(
     value_separator: u8,
     single_label: &[u8],
     output: &mut O,
+    output_empty: bool,
 ) -> Result<(), io::Error>
 where
     R: Read,
@@ -45,7 +51,14 @@ where
     let lines = br.split(line_separator);
     for rline in lines {
         let line: &[u8] = &rline?;
-        line2single2value2output(line, field_separator, value_separator, single_label, output)?;
+        line2single2value2output(
+            line,
+            field_separator,
+            value_separator,
+            single_label,
+            output,
+            output_empty,
+        )?;
     }
     Ok(())
 }
@@ -57,6 +70,7 @@ pub fn reader2writer<R, W>(
     field_separator: u8,
     value_separator: u8,
     single_label: &[u8],
+    output_empty: bool,
 ) -> Result<(), io::Error>
 where
     R: Read,
@@ -75,6 +89,7 @@ where
                 bw.write_all(b"\n")?;
                 Ok(())
             },
+            output_empty,
         )?;
         bw.flush()?;
     }
